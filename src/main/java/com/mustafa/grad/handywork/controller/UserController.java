@@ -60,7 +60,7 @@ public class UserController {
 
         model.addAttribute("ModelUser", loadedUser);
 
-        return "/users/page2";
+        return "/users/page";
     }
 
     // get the form to make a user
@@ -235,6 +235,7 @@ public class UserController {
     }
 
     // post for update password
+
     @PostMapping(value = "/update/password")
     public String updateUserPassword(@Valid @ModelAttribute("ModelUser") User modelUser, BindingResult bindingResult) {
 
@@ -243,6 +244,40 @@ public class UserController {
         }
 
         userRepository.updateUserPassword(modelUser.getId(), modelUser.getPassword());
+
+        return "redirect:/users/update/" + modelUser.getId();
+    }
+
+    // get the form for update profile pic
+
+    @GetMapping(value = "/update/profilePicture/{id}")
+    public String getUserFormForUpdateProfilePic(@PathVariable Long id, Model model) {
+        Optional<User> dbUser = userRepository.findById(id);
+
+        if (dbUser.isPresent()) {
+            model.addAttribute("ModelUser", dbUser);
+            return "users/update/profilePic";
+        }
+
+        throw new RuntimeException("User not found 404");
+    }
+
+    // post for update profile pic
+
+    @PostMapping(value = "/update/profilePicture")
+    public String updateUserProfilePic(@Valid @ModelAttribute("ModelUser") User modelUser, BindingResult bindingResult) {
+
+        if (bindingResult.getErrorCount() > 3) {
+            return "users/update/profilePic";
+        }
+
+        System.out.println("\n\n"+bindingResult.getErrorCount() +"\n\n");
+
+        System.out.println("image file size" + modelUser.getProfilePicFile().getSize());
+
+        String imageUrl = ImageUtils.ImageToUrl(modelUser.getProfilePicFile());
+
+        userRepository.updateUserProfilePicture(modelUser.getId(), imageUrl);
 
         return "redirect:/users/update/" + modelUser.getId();
     }

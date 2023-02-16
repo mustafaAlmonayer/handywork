@@ -62,6 +62,10 @@ public class Job {
     @JoinColumn(name = "job_id")
     private List<String> imagesUrls;
 
+    @Column(name = "is_done", table = "jobs", nullable = false)
+    @NotEmpty(message = "cannot be empty")
+    private boolean isDone;
+
     @Transient
     private List<MultipartFile> images;
 

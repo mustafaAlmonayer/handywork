@@ -4,7 +4,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Update Username</title>
+  <title>Update Profile Picture</title>
   <!-- CSS only -->
   <link th:insert="fragments/csslink.html">
 </head>
@@ -15,16 +15,15 @@
 
 <div class="container">
 
-  <h1>Update Username</h1>
+  <h1>Update Profile Picture</h1>
 
   <hr>
 
-
-  <form action="#" th:action="@{/users/update/userName}" th:object="${ModelUser}" method="POST">
+  <form action="#" th:action="@{/users/update/profilePicture}" th:object="${ModelUser}" method="POST" enctype="multipart/form-data">
     <input type="hidden" th:field="*{id}">
     <div>
-      <input type="text" th:field="*{userName}" class="form-control mb-4 col-4" placeholder="Username">
-      <p class="alert alert-danger" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">
+      <input type="file" accept="image/*" th:field="*{profilePicFile}" class="form-control mb-4 col-4" placeholder="Profile Picture">
+      <p class="alert alert-danger" th:if="${#fields.hasErrors('profilePicFile')}" th:errors="*{profilePicFile}">
     </div>
     <div>
       <input type="submit" class="btn btn-info col-2" value="Save">
