@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${ModelUser.userName}"></title>
+    <!-- CSS only -->
+    <link th:insert="fragments/csslink.html">
+</head>
+<body>
+
+    <nav th:insert="fragments/navbar.html"></nav>
+
+
+    <div class="container">
+        <div class="text-center mt-3">
+            <h2>User Information</h2>
+        </div>
+
+        </div>
+        <div class="text-center mt-3">
+            <img th:src="${ModelUser.profilePicture}" class="img-fluid rounded-circle mx-auto d-block width-200px height-200px width-200px height-200" style="width:200px; height: 200px" alt="user Image">
+        </div>
+        <div class="text-center mt-3">
+            <button class="btn btn-primary">Update Profile Picture</button>
+        </div>
+    </div>
+
+    <div class="container mt-3">
+        <div class="card col-12 text-center bg-dark text-light">
+            <div class="card-header">
+                <p>Account Details</p>
+            </div>
+            <div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Username: <span th:text="${ModelUser.userName}"></span></li>
+                    <li class="list-group-item">Email: <span th:text="${ModelUser.email}"></span></li>
+                    <li class="list-group-item">Phone Number: <span th:text="${ModelUser.phoneNumber}"></span></li>
+                    <li class="list-group-item">First Name: <span th:text="${ModelUser.firstName}"></span></li>
+                    <li class="list-group-item">Last Name: <span th:text="${ModelUser.lastName}"></span></li>
+                    <li class="list-group-item">Role: <span th:text="${ModelUser.authority}"></span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-3">
+        <button class="btn btn-primary">Update Profile Information</button>
+    </div>
+
+    <div class="container">
+        <div class="text-center mt-3">
+            <h2>My Jobs</h2>
+        </div>
+    </div>
+
+
+    <div class="container mt-3 justify-content-center d-flex">
+        <div class="row col-12 justify-content-center d-flex">
+            <th:block th:each="job : ${ModelUser.jobs}">
+             <div class="card col-5 text-center m-3 border-dark">
+                 <img th:src="${job.imagesUrls[0]}" style=" width: 100%; height: 15vw; object-fit: cover;" class="card-img-top mt-2" alt="job thumbnail">
+                 <div class="card-body">
+                <h5 class="card-title" th:text="${job.jobName}"></h5>
+                <p class="card-text" th:text="${job.description}"></p>
+             </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Filed: <span th:text="${job.field}"></span></li>
+                <li class="list-group-item">Date: <span th:text="${job.publishDate}"></span></li>
+                <li class="list-group-item">Suggested Price: <span th:text="${job.price}"></span></li>
+            </ul>
+            <div class="card-body">
+                <a th:href="@{'/jobs/update/' + ${job.id}}" class="btn btn-primary">Update</a>
+                <a href="#" class="btn btn-success">Mark As Done</a>
+                <a th:href="@{'/jobs/delete/' + ${job.id}}" class="btn btn-danger">Delete</a>
+            </div>
+            </div>
+            </th:block>
+        </div>
+    </div>
+
+
+
+
+
+
+    <script th:insert="fragments/bootscript"/>
+
+</body>
+</html>

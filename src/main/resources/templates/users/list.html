@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <link th:insert="fragments/csslink.html">
+</head>
+<body>
+
+    <nav th:insert="fragments/navbar.html"></nav>
+
+    <h1>All Users</h1>
+    <a th:href="@{/users/register}">Register</a>
+
+    <script th:insert="fragments/bootscript">
+</body>
+</html>

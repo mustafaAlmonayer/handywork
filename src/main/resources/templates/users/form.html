@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <!-- CSS only -->
+  <link th:insert="fragments/csslink.html">
+</head>
+
+<body>
+
+<nav th:insert="fragments/navbar.html"></nav>
+
+<div class="container">
+
+  <h3>Register</h3>
+
+  <hr>
+
+  <h4 class="mb-4">Add User</h4>
+
+  <form action="#" th:action="@{/users/register}" th:object="${ModelUser}" method="POST" enctype="multipart/form-data">
+    <input type="hidden" th:field="*{id}">
+    <input type="hidden" th:field="*{authority}">
+    <div>
+      <input type="text" th:field="*{userName}" class="form-control mb-4 col-4" placeholder="Username">
+      <p class="alert alert-danger" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">
+    </div>
+    <div>
+      <input type="email" th:field="*{email}" class="form-control mb-4 col-4" placeholder="email">
+      <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+    </div>
+    <div>
+      <input type="password" th:field="*{password}" class="form-control mb-4 col-4" placeholder="Password">
+      <p class="alert alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+    </div>
+    <div>
+      <input type="text" th:field="*{firstName}" class="form-control mb-4 col-4" placeholder="First Name*">
+      <p class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">
+    </div>
+    <div>
+      <input type="text" th:field="*{lastName}" class="form-control mb-4 col-4" placeholder="Last Name*">
+      <p class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">
+    </div>
+    <div>
+      <input type="text" th:field="*{phoneNumber}" class="form-control mb-4 col-4" placeholder="Phone Number*" value="">
+      <p class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">
+    </div>
+    <div>
+      <input type="file" accept="image/*" th:field="*{profilePicFile}" class="form-control mb-4 col-4" placeholder="Profile Picture">
+      <p class="alert alert-danger" th:if="${#fields.hasErrors('profilePicFile')}" th:errors="*{profilePicFile}">
+    </div>
+    <div>
+      <input type="submit" class="btn btn-info col-2" value="Save">
+    </div>
+  </form>
+
+  <hr>
+
+  <a th:href="@{/users/}">Employees List</a>
+</div>
+
+<!-- JavaScript Bundle with Popper -->
+<script th:insert="fragments/bootscript">
+
+</body>
+
+</html>

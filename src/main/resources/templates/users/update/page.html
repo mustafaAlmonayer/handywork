@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Update Account</title>
+  <!-- CSS only -->
+  <link th:insert="fragments/csslink.html">
+</head>
+
+<body>
+
+<nav th:insert="fragments/navbar.html"></nav>
+
+<div class="container">
+  <h1>Update Account</h1>
+  <hr>
+  <div class="list-group cul-8">
+    <a th:href="@{'/users/update/firstLastName/' + ${id}}"  class="list-group-item list-group-item-action">Update First & Last Name</a>
+    <a th:href="@{'/users/update/phoneNumber/' + ${id}}"  class="list-group-item list-group-item-action">Update Phone Number</a>
+    <a th:href="@{'/users/update/userName/' + ${id}}"  class="list-group-item list-group-item-action">Update Username</a>
+    <a th:href="@{'/users/update/email/' + ${id}}"  class="list-group-item list-group-item-action">Update Email</a>
+    <a th:href="@{'/users/update/password/' + ${id}}"  class="list-group-item list-group-item-action">Update password</a>
+
+  </div>
+</div>
+
+<!-- JavaScript Bundle with Popper -->
+<script th:insert="fragments/bootscript">
+
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create Job</title>
+    <!-- CSS only -->
+    <link th:insert="fragments/csslink.html">
+</head>
+
+<body>
+
+<nav th:insert="fragments/navbar.html"></nav>
+
+<div class="container">
+
+    <h3>All Jobs</h3>
+
+    <hr>
+
+    <div class="container mt-3 justify-content-center d-flex">
+        <div class="row col-12 justify-content-center d-flex">
+            <th:block th:each="job : ${usersJobs}">
+                <div class="card col-5 text-center m-3 border-dark">
+                    <img th:src="${job.imagesUrls[0]}" style=" width: 100%; height: 15vw; object-fit: cover;" class="card-img-top mt-2" alt="job thumbnail">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${job.jobName}"></h5>
+                        <p class="card-text" th:text="${job.description}"></p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Filed: <span th:text="${job.field}"></span></li>
+                        <li class="list-group-item">Date: <span th:text="${job.publishDate}"></span></li>
+                        <li class="list-group-item">Suggested Price: <span th:text="${job.price}"></span></li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="btn btn-primary">Update</a>
+                        <a href="#" class="btn btn-success">Mark As Done</a>
+                        <a href="#" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+    </div>
+
+    <hr>
+
+<a th:href="@{'/users/' + ${id}}">Cancel</a>
+</div>
+
+<!-- JavaScript Bundle with Popper -->
+< th:insert="fragments/bootscript"/>
+
+</body>
+
+</html>

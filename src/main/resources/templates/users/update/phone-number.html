@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Update Phone Number</title>
+  <!-- CSS only -->
+  <link th:insert="fragments/csslink.html">
+</head>
+
+<body>
+
+<nav th:insert="fragments/navbar.html"></nav>
+
+<div class="container">
+
+  <h1>Update Phone Number</h1>
+
+  <hr>
+
+
+  <form action="#" th:action="@{/users/update/phoneNumber}" th:object="${ModelUser}" method="POST">
+    <input type="hidden" th:field="*{id}">
+    <div>
+      <input type="text" th:field="*{phoneNumber}" class="form-control mb-4 col-4" placeholder="Phone Number*">
+      <p class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">
+    </div>
+    <div>
+      <input type="submit" class="btn btn-info col-2" value="Save">
+    </div>
+  </form>
+
+  <hr>
+
+  <a th:href="@{/users/}">Employees List</a>
+</div>
+
+<!-- JavaScript Bundle with Popper -->
+<script th:insert="fragments/bootscript">
+
+</body>
+
+</html>

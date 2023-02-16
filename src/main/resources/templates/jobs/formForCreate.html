@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create Job</title>
+    <!-- CSS only -->
+    <link th:insert="fragments/csslink.html">
+</head>
+
+<body>
+
+<nav th:insert="fragments/navbar.html"></nav>
+
+<div class="container">
+
+    <h3>Create Job</h3>
+
+    <hr>
+
+    <form action="#" th:action="@{/jobs/create}" th:object="${userJob}" method="POST" enctype="multipart/form-data">
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{owner}">
+        <input type="hidden" th:feld="*{publishDate}">
+        <div>
+            <input type="text" th:field="*{jobName}" class="form-control mb-4 col-4" placeholder="Job Name">
+            <p class="alert alert-danger" th:if="${#fields.hasErrors('jobName')}" th:errors="*{jobName}">
+        </div>
+        <div>
+            <input type="text" th:field="*{field}" class="form-control mb-4 col-4" placeholder="Job Field">
+            <p class="alert alert-danger" th:if="${#fields.hasErrors('field')}" th:errors="*{field}">
+        </div>
+        <div>
+            <textarea th:field="*{description}" class="form-control mb-4 col-4" placeholder="description"></textarea>
+            <p class="alert alert-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
+        </div>
+        <div>
+            <input type="number" th:field="*{price}" class="form-control mb-4 col-4" placeholder="price">
+            <p class="alert alert-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">
+        </div>
+
+        <div>
+            <input type="file" accept="image/*" th:field="*{images}" multiple class="form-control mb-4 col-4" placeholder="images">
+            <p class="alert alert-danger" th:if="${#fields.hasErrors('images')}" th:errors="*{images}">
+        </div>
+            <input type="submit" class="btn btn-info col-2" value="Save">
+        </div>
+    </form>
+
+    <hr>
+
+    <a th:href="@{'/users/' + ${id}}">Cancel</a>
+</div>
+
+<!-- JavaScript Bundle with Popper -->
+<script th:insert="fragments/bootscript">
+
+</body>
+
+</html>
