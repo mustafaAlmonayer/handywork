@@ -119,9 +119,18 @@ public class JobController {
         Job job = dataBaseJob.get();
         Long owner = job.getOwner().getId();
 
-        User user = userRepository.findById(job.getOwner().getId()).get();
-        System.out.println("\n\n" + user.getJobs().remove(user.findJobIndex(job.getId())) + "\n\n");
-        userRepository.save(user);
+        Optional<User> user = userRepository.findById(job.getOwner().getId());
+
+        User dbUser;
+
+        if (user.isPresent()) {
+            dbUser = user.get();
+        } else {
+            throw new RuntimeException("User not found 404");
+        }
+
+        System.out.println("\n\n" + dbUser.getJobs().remove(dbUser.findJobIndex(job.getId())) + "\n\n");
+        userRepository.save(dbUser);
         jobRepository.delete(job);
 
         return "redirect:/users/" + owner;

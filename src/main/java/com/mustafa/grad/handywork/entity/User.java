@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(
@@ -94,7 +95,18 @@ public class User {
 
     // constructor with all attributes except id
 
-    public User(String userName, String password, String firstName, String lastName, String email, String phoneNumber, String authority, List<Job> jobs, String profilePicture, MultipartFile profilePicFile) {
+    public User(
+            String userName,
+            String password,
+            String firstName,
+            String lastName,
+            String email,
+            String phoneNumber,
+            String authority,
+            List<Job> jobs,
+            String profilePicture,
+            MultipartFile profilePicFile
+    ) {
         this.userName = userName;
         this.password = password;
         this.firstName = firstName;
@@ -198,7 +210,7 @@ public class User {
     public int findJobIndex(Long id) {
 
         for (int i = 0; i < this.jobs.size(); i++) {
-            if (this.jobs.get(i).getId() == id) {
+            if (Objects.equals(this.jobs.get(i).getId(), id)) {
                 return i;
             }
         }
@@ -211,7 +223,7 @@ public class User {
         StringBuilder str = new StringBuilder();
 
         for (Job job: jobs) {
-            str.append(job.getId() + ", ");
+            str.append(job.getId()).append(", ");
         }
 
         return "User{" +

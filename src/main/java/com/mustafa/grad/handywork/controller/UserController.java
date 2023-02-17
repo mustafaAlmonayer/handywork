@@ -25,7 +25,7 @@ public class UserController {
     @Autowired
     private JobRepository jobRepository;
 
-    // get all users
+    // get home page
 
     @GetMapping()
     public String home() {
@@ -48,13 +48,11 @@ public class UserController {
 
         loadedUser.setJobs(jobRepository.findAllByOwner(loadedUser));
 
-        if (loadedUser.getProfilePicture() == null) {
-            loadedUser.setProfilePicture("https://res.cloudinary.com/dsgouaw4m/image/upload/v1671821149/blank-profile-picture-973460_kvr8i6.svg");
-        } else if (loadedUser.getProfilePicture().isEmpty()) {
+        if (loadedUser.getProfilePicture() == null || loadedUser.getProfilePicture().isEmpty()) {
             loadedUser.setProfilePicture("https://res.cloudinary.com/dsgouaw4m/image/upload/v1671821149/blank-profile-picture-973460_kvr8i6.svg");
         }
 
-        for (Job job: user.get().getJobs()) {
+        for (Job job: loadedUser.getJobs()) {
             job.setUrlsFirstIndex();
         }
 
@@ -271,20 +269,11 @@ public class UserController {
             return "users/update/profilePic";
         }
 
-        System.out.println("\n\n"+bindingResult.getErrorCount() +"\n\n");
-
-        System.out.println("image file size" + modelUser.getProfilePicFile().getSize());
-
         String imageUrl = ImageUtils.ImageToUrl(modelUser.getProfilePicFile());
 
         userRepository.updateUserProfilePicture(modelUser.getId(), imageUrl);
 
         return "redirect:/users/update/" + modelUser.getId();
-    }
-
-    @GetMapping(value = "/page2")
-    public String page2() {
-        return "/users/page2";
     }
 
     // end of updating users account

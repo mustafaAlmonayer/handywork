@@ -19,13 +19,12 @@ public class ImageService {
 
     Cloudinary cloudinary;
 
-
     public void init() {
+
         // Set Cloudinary credentials
         Dotenv dotenv = Dotenv.load();
         cloudinary = new Cloudinary(dotenv.get("CLOUDINARY_URL"));
         cloudinary.config.secure = true;
-        System.out.println(cloudinary.config);
 
     }
 
@@ -44,12 +43,14 @@ public class ImageService {
 
         image.transferTo(temp);
 
-
         return cloudinary.uploader().upload(temp.toFile(), ObjectUtils.emptyMap()).get("url").toString();
+
     }
 
     public List<String> imageUpload(List<MultipartFile> images) {
+
         List<String> urls = new ArrayList<>();
+
         for (MultipartFile image : images) {
             urls.add(imageUpload(image));
         }

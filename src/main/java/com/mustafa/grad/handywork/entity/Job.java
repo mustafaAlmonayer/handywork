@@ -155,6 +155,14 @@ public class Job {
         this.images = images;
     }
 
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public void setDone(boolean done) {
+        isDone = done;
+    }
+
     public void setUrlsFirstIndex() {
         if (imagesUrls == null || imagesUrls.size() == 0){
             imagesUrls = new ArrayList<>();
@@ -166,13 +174,15 @@ public class Job {
     public String toString() {
         return "Job{" +
                 "id=" + id +
-                ", owner=" + owner.getId() +
+                ", owner=" + owner +
                 ", field='" + field + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", publishDate=" + publishDate +
                 ", jobName='" + jobName + '\'' +
                 ", imagesUrls=" + imagesUrls +
+                ", isDone=" + isDone +
+                ", images=" + images +
                 '}';
     }
 }
