@@ -74,7 +74,7 @@ public class JobController {
     // post job to save or update
 
     @PostMapping(value = "/create")
-    public String createJob(@Valid @ModelAttribute("userJob") Job job, BindingResult bindingResult) {
+    public String createJob(@Valid @ModelAttribute("userJob") Job modelJob, BindingResult bindingResult) {
 
         System.out.println(bindingResult.getErrorCount());
 
@@ -82,14 +82,14 @@ public class JobController {
             return "/jobs/formForCreate";
         }
 
-        if (job.getImages().get(0).getSize() != 0) {
-            job.setImagesUrls(ImageUtils.ImagesToUrls(job.getImages()));
+        if (modelJob.getImages().get(0).getSize() != 0 || modelJob.getImages() != null) {
+            modelJob.setImagesUrls(ImageUtils.ImagesToUrls(modelJob.getImages()));
         }
 
-        job.setPublishDate(new Date());
+        modelJob.setPublishDate(new Date());
         System.out.println(new Date());
-        jobRepository.save(job);
-        return "redirect:/users/" + job.getOwner().getId();
+        jobRepository.save(modelJob);
+        return "redirect:/users/" + modelJob.getOwner().getId();
     }
 
     // get job form for update
@@ -110,16 +110,16 @@ public class JobController {
 
     @GetMapping(value = "/delete/{id}")
     public String deleteJob(@PathVariable Long id) {
-        Optional<Job> dataBaseJob = jobRepository.findById(id);
+        Optional<Job> job = jobRepository.findById(id);
 
-        if (!dataBaseJob.isPresent()) {
+        if (!job.isPresent()) {
             throw new RuntimeException("job not found - " + id);
         }
 
-        Job job = dataBaseJob.get();
-        Long owner = job.getOwner().getId();
+        Job dbJob = job.get();
+        Long owner = dbJob.getOwner().getId();
 
-        Optional<User> user = userRepository.findById(job.getOwner().getId());
+        Optional<User> user = userRepository.findById(dbJob.getOwner().getId());
 
         User dbUser;
 
@@ -129,9 +129,9 @@ public class JobController {
             throw new RuntimeException("User not found 404");
         }
 
-        System.out.println("\n\n" + dbUser.getJobs().remove(dbUser.findJobIndex(job.getId())) + "\n\n");
+        dbUser.getJobs().remove(dbUser.findJobIndex(dbJob.getId()));
         userRepository.save(dbUser);
-        jobRepository.delete(job);
+        jobRepository.delete(dbJob);
 
         return "redirect:/users/" + owner;
     }
