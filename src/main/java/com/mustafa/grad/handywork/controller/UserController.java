@@ -24,6 +24,8 @@ public class UserController {
     UserRepository userRepository;
     @Autowired
     private JobRepository jobRepository;
+    @Autowired
+    private ImageUtils imageUtils;
 
     // get home page
 
@@ -81,7 +83,7 @@ public class UserController {
         }
 
         if (!modelUser.getProfilePicFile().isEmpty() || modelUser.getProfilePicFile() != null) {
-            modelUser.setProfilePicture(ImageUtils.ImageToUrl(modelUser.getProfilePicFile()));
+            modelUser.setProfilePicture(imageUtils.ImageToUrl(modelUser.getProfilePicFile()));
         }
 
         userRepository.save(modelUser);
@@ -269,7 +271,7 @@ public class UserController {
             return "users/update/profilePic";
         }
 
-        String imageUrl = ImageUtils.ImageToUrl(modelUser.getProfilePicFile());
+        String imageUrl = imageUtils.ImageToUrl(modelUser.getProfilePicFile());
 
         userRepository.updateUserProfilePicture(modelUser.getId(), imageUrl);
 

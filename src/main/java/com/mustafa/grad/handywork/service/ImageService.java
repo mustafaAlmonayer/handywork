@@ -4,8 +4,10 @@ package com.mustafa.grad.handywork.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import io.github.cdimascio.dotenv.Dotenv;
+
 import lombok.SneakyThrows;
+
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -14,20 +16,14 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Component
 public class ImageService {
 
     Cloudinary cloudinary;
 
-    public void init() {
-
-        // Set Cloudinary credentials
-        Dotenv dotenv = Dotenv.load();
-        cloudinary = new Cloudinary(dotenv.get("CLOUDINARY_URL"));
-        cloudinary.config.secure = true;
-
+    public ImageService(Cloudinary cloudinary) {
+        this.cloudinary = cloudinary;
     }
-
 
     @SneakyThrows
     public String imageUpload(MultipartFile image) {

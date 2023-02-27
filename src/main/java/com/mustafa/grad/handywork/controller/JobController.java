@@ -19,10 +19,13 @@ import java.util.Optional;
 @Controller
 @RequestMapping(value = "/jobs")
 public class JobController {
+
     @Autowired
     private JobRepository jobRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ImageUtils imageUtils;
 
     @GetMapping(value = "/all")
     public String getAllJobs(Model model) {
@@ -71,7 +74,7 @@ public class JobController {
         return "/jobs/formForCreate";
     }
 
-    // post job to save or update
+    // post job to save or   List<String> urls = new ArrayList<>();update
 
     @PostMapping(value = "/create")
     public String createJob(@Valid @ModelAttribute("userJob") Job modelJob, BindingResult bindingResult) {
@@ -83,7 +86,7 @@ public class JobController {
         }
 
         if (modelJob.getImages().get(0).getSize() != 0 || modelJob.getImages() != null) {
-            modelJob.setImagesUrls(ImageUtils.ImagesToUrls(modelJob.getImages()));
+            modelJob.setImagesUrls(imageUtils.ImagesToUrls(modelJob.getImages()));
         }
 
         modelJob.setPublishDate(new Date());
